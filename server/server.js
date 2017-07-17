@@ -12,10 +12,34 @@ var server = http.createServer(app);
 var io = socketIO(server);
 
 io.on('connection', (socket) => {
+    
     console.log('New User connected.');
+    
+    socket.emit('newMessage', {
+        from: 'redKnight93',
+        text: 'Hi everyone!',
+        createdAt: 17072017
+    });
+
+    socket.on('createMessage', (message) => {
+        console.log(message);
+    })
+
+    // socket.emit('newEmail', {
+    //     from: 'antonio@gmail.com',
+    //     text: "Hi, this is Antonio!",
+    //     createdAt: 17072017
+    // });
+
+    // socket.on('createEmail', (email) => {
+    //     console.log(email);
+    // });
+
     socket.on('disconnect', () => {
         console.log('Users was disconnected.');
     });
+
+
 });
 
 server.listen(port, () => {
