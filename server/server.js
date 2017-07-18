@@ -21,8 +21,11 @@ io.on('connection', (socket) => {
 
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         io.emit('newMessage', generateMessage(message.from, message.text));
+        if (message.from === 'erCavaliereNero') {
+            callback('Va bene ho capito');
+        };
         // io.emit('newMessage', {
         //     from: message.from,
         //     text: message.text,
