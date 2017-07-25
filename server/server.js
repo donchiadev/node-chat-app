@@ -23,9 +23,7 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message, callback) => {
         io.emit('newMessage', generateMessage(message.from, message.text));
-        if (message.from === 'erCavaliereNero') {
-            callback('Va bene ho capito');
-        };
+        callback();
         // io.emit('newMessage', {
         //     from: message.from,
         //     text: message.text,
