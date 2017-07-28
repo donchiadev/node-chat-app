@@ -6,15 +6,16 @@ var socket = io();
 // });
 
 socket.on('newMessage', function (message) {
-    console.log('newMessage', message);
+    var formattedTime = moment(message.createdAt).format('h:mm a'); 
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formattedTime}: ${message.text}`);
     jQuery('#messages').append(li);
 });
 
 socket.on('newLocationMessage', function (message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formattedTime}: `);
     var a = jQuery('<a target="_blank">My current location</a>');
     a.attr('href', message.url);
     li.append(a);
@@ -53,7 +54,7 @@ jQuery('#message-form').on('submit', function (e) {
 var locationButton = jQuery('#send-location');
 locationButton.on('click', function () {
     if (!navigator.geolocation) {
-        return alter()
+        return alert()
     }
 
     locationButton.attr('disabled', 'disabled').text('Sending location...');
