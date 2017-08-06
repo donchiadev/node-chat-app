@@ -66,7 +66,25 @@ socket.on('newLocationMessage', function (message) {
 // })
 
 socket.on('connect', function () {
-    console.log('Connected to server');
+    var params = jQuery.deparam(window.location.search);
+    socket.emit('join', params, function (err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/'
+        } else {
+            console.log('No error');
+        }
+    });
+});
+
+socket.on('updateUserList', function (usersArray) {
+    var ol = jQuery('<ol></ol>');
+    usersArray.forEach( function(user) {
+        var li = jQuery('<li></li>');
+        li.text(`${user}`);
+        ol.append(li);
+    });
+    jQuery('#users').html(ol);
 });
 
 socket.on('disconnect', function() {
